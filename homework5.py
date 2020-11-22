@@ -17,7 +17,7 @@ while True:
     option = int(input('Select an option: '))
     if option == 1:
         name = input('Task name: ')
-        status = 'not done'
+        status = 'Not done'
         tasks.append(Task(name, status))
 
         for i in range(len(tasks)):
@@ -25,7 +25,7 @@ while True:
 
     if option == 2:
         number = int(input('Enter the number of the completed task: '))
-        tasks[number-1][1] = "Done"
+        tasks[number-1] = "Done"
 
-        for i in range(len(task+s)):
+        for i in range(len(tasks)):
             print(i+1 ,tasks[i])
