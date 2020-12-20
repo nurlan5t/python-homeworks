@@ -6,8 +6,8 @@ class UserProfile:
     __phone_number = 123456789
     __password = 123456
 
-a = UserProfile()
+    def get_data(self):
+        return self.__name
 
-print(a.name)
-print(a._phone_number)
-print(a.phone_number)
+a = UserProfile()
+print(a.get_data())
