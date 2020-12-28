@@ -1,0 +1,17 @@
+1) install django in project for insurance
+pip install django
+
+2) create new Django project
+django-admin startproject projectsname
+
+3) create virtual environment (in project directory)
+python3 -m venv venvname
+
+4) activate and deactivate virtual environment
+source venvname/bin/activate   /  deactivate
+
+5) start a Django project (near manage.py file)
+python3 manage.py runserver
+
+6) install bs4 / requests in virtual environment (for example)
+
