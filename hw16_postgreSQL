@@ -1,0 +1,28 @@
+table - player: id, name, country, age
+table - club: id, name, country, stadium
+
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+- Enter in PostgreSQL
+    *  sudo -i -u postgres
+    * psql
+
+- Creating tables(player, club)
+    * create table player(id serial primary key, name varchar(255), country varchar(30), age varchar(3));
+    * create table club(id serial primary key, name varchar(255), country varchar(30), stadium varchar(255));
+
+- Add data to tables(player, club)
+    * insert into player(name, country, age, club) values('Messi', 'Argentina', 33, 'FC Barcelona');
+    * insert into club(name, country, stadium) values('FC Barcelona', 'Spain', 'Camp Nou');
+
+- Get data from/about tables(player, club)
+    * select ((attribute)selectively/*all from player/club;
+
+    * \d player/club
+
+- Delete tables
+    * drop table player/club
+
+- Exit on PostgreSQL
+    * \q
