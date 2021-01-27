@@ -23,7 +23,7 @@ def delete_post(request, id):
         del_post = Post.objects.get(id=id)
         del_post.delete()
         return HttpResponse('Post deleted')
-        show_lenta()
+
 @csrf_exempt
 def add_like(request):
     return HttpResponse(
