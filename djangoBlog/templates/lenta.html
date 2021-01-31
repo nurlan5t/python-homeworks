@@ -1,24 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="en">
+<a align="right" href="admin/"><p align="right">I'M ADMIN (если чё)</p></a>
+
 <head>
     <meta charset="UTF-8">
-    <title>Lenta</title>
+    <title>View and add posts</title>
 </head>
-<h2>Posts</h2>
+
+<h1 align="center">Create new post</h1>
+<body>
+<h3 align="center">
+        <form action="/add-post/" method="POST">
+        {% csrf_token %}
+        <label for="image"> Изображение: </label>
+        <input id="image" type="file" name="image">
+
+        <label for="title"> Заголовок: </label>
+        <input id="title" type="text" name="title">
+
+        <label for="description"> Описание: </label>
+        <input id="description" type="text" name="description">
+            <input type="submit" value="Создать пост">
+    </form>
+</h3>
+</body>
+</html>
+
+
+<h1 align="center">Posts</h1>
 <body>
 <div>
-        <ul>
-            {% for post in posts %}
+    <ul>
+        {% for post in posts %}
+            <h3>
                 <li>
-                    <p>title: {{ post.title }}</p>
-                    <p>description: {{ post.description }}</p>
-                    <p>image: {{ post.image }}</p>
-                    <p>like: {{ post.like }}</p>
-                    <p>id: {{ post.id }}</p>
-                    <a href="delete-post/{{post.id}}">Удалить</a></td>
+                <a href="/posts/{{ post.id }}/"><p>{{ post.title }}</p></a>
+                <p>image: {{ post.image }}</p>
+                <p>like: {{ post.like }}</p>
                 </li>
-            {% endfor %}
-        </ul>
+            </h3>
+          <a href="edit-post/{{post.id}}">Edit</a> | <a href="delete-post/{{post.id}}">Delete</a>
+        {% endfor %}
+    </ul>
 </div>
 </body>
 </html>

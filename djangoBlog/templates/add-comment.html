@@ -5,10 +5,12 @@
     <title>Add-comment</title>
 </head>
 <body>
-<form action="/comment-add" method="POST">
-    {% csrf_token %}
-    <input type="text">
-    <input type="submit">
+        <div>
+            <form action="/comment-add/" method="POST">
+        {% csrf_token %}
+            <textarea type="text" placeholder="Добавить комментарий" cols="30" rows="3"></textarea>
+            <input  type="submit" name="submit" value="Отправить">
+        </div>
 </form>
 </body>
 </html>
