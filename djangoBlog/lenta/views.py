@@ -1,48 +1,49 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from lenta.models import Post
+from .models import Post, Post_Comment
+from django.views import generic
+from .forms import CommentForm
 
+class PostView(generic.ListView):
+    template_name = 'lenta.html'
+    queryset = Post.objects.all()
 
-@csrf_exempt
-def show_lenta(request):
-    if request.method == 'GET':
-        return render(request, 'lenta.html', context={'posts': Post.objects.all()})
+class PostDetailView(generic.DetailView):
+    model = Post
+    template_name = 'post-detail.html'
+    extra_context = {'form': CommentForm()}
 
-def detail_post(request, pk):
-    try:
-        post = Post.objects.get(id=pk)
-        return render(request, 'post-detail.html', context={'post': post})
-    except Post.DoesNotExist:
-        return HttpResponse('Does Not Exist!', status=404)
+    @csrf_exempt
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        form = CommentForm(request.POST, initial={'post': post})
+        if form.is_valid():
+            form.save()
+        return self.get(request, *args, **kwargs)
 
+class PostCreateView(generic.CreateView):
+    template_name = 'add-post.html'
+    model = Post
+    fields = [
+        'title',
+        'description',
+        'image'
+    ]
+class PostEditView(generic.UpdateView):
+    model = Post
+    template_name = 'edit-post.html'
+    fields = [
+        'title',
+        'description',
+        'image'
+    ]
 
-def add_post(request):
-    if request.method == 'POST':
-        data = request.POST
-        post = Post.objects.create(image=data['image'], title=data['title'],
-                                   description=data['description'])
-        return HttpResponse('Post created')
-    if request.method == 'GET':
-        return render(request, 'add-post.html')
-    else:
-        return HttpResponse('Method not allowed')
+class PostDeleteView(generic.DeleteView):
+    model = Post
+    success_url = '/'
+    template_name = 'delete_post.html'
 
-def delete_post(request, id):
-        del_post = Post.objects.get(id=id)
-        del_post.delete()
-        return HttpResponse('Post deleted')
-
-def edit_post(request, id):
-    edit_post = Post.objects.get(id=id)
-    if request.method == 'POST':
-        edit_post.image = request.POST.get("image")
-        edit_post.title = request.POST.get("title")
-        edit_post.description = request.POST.get("description")
-        edit_post.save()
-        return HttpResponse("Post edited")
-    else:
-        return render(request, 'edit-post.html', context={'post': edit_post})
 
 @csrf_exempt
 def add_like(request):
@@ -50,5 +51,15 @@ def add_like(request):
         f'method - {request.method} </br> </br> header - {request.headers} </br> </br> body - {request.body}'
     )
 
-def add_comment(request):
-    return HttpResponse('Added comment')
+@csrf_exempt
+def add_comment(request, pk):
+    post = Post.objects.get(pk=id)
+    if request.method == 'POST':
+        data = request.POST
+        comment_post = Post_Comment.objects.create(post=post['pk'],text=data['text'])
+        comment_post.save()
+        return HttpResponse(f'Added comment {comment_post.text}')
+    if request.method == 'GET':
+        return render(request, 'post-detail.html')
+    else:
+        return HttpResponse('Method not allowed')

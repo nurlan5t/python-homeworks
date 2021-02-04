@@ -7,14 +7,7 @@
 <body>
 <form action="/add-post/" method="POST">
     {% csrf_token %}
-    <label for="image">Изображение</label>
-    <input id="image" type="file" name="image">
-
-    <label for="title">Заголовок</label>
-    <input id="title" type="text" name="title">
-
-    <label for="description">Описание</label>
-    <input id="description" type="text" name="description">
+        {{ form.as_p }}
         <input type="submit" value="Создать пост">
 </form>
 </body>

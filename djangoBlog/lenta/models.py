@@ -26,7 +26,7 @@ class Comment(models.Model):
 
 
 class Post(models.Model):
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/', null=True)
     title = models.CharField('Post title', max_length=150)
     description = models.TextField()
     like = models.IntegerField(default=0)
@@ -34,14 +34,17 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return f'/'
+
     class Meta:
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
 
 
 class Post_Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    text = models.CharField('comment text', max_length=200)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')
+    text = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

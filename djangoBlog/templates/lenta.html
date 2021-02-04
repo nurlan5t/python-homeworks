@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <a align="right" href="admin/"><p align="right">I'M ADMIN (если чё)</p></a>
 
 <head>
     <meta charset="UTF-8">
     <title>View and add posts</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
 <h1 align="center">Create new post</h1>
@@ -25,22 +26,24 @@
     </form>
 </h3>
 </body>
-</html>
+
 
 
 <h1 align="center">Posts</h1>
 <body>
 <div>
     <ul>
-        {% for post in posts %}
+        {% for post in object_list %}
             <h3>
                 <li>
                 <a href="/posts/{{ post.id }}/"><p>{{ post.title }}</p></a>
-                <p>image: {{ post.image }}</p>
+                <img class="show-image" src="{{ post.image }}" alt="image">
                 <p>like: {{ post.like }}</p>
                 </li>
             </h3>
-          <a href="edit-post/{{post.id}}">Edit</a> | <a href="delete-post/{{post.id}}">Delete</a>
+          <a href="edit-post/{{post.id}}">Edit</a> |
+        {% csrf_token %}
+        <a href="delete-post/{{post.id}}/">Delete</a> <br>
         {% endfor %}
     </ul>
 </div>

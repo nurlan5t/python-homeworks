@@ -2,15 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add-comment</title>
+    <title>Detailed information about: {{ post.title }}</title>
 </head>
 <body>
-        <div>
-            <form action="/comment-add/" method="POST">
-        {% csrf_token %}
-            <textarea type="text" placeholder="Добавить комментарий" cols="30" rows="3"></textarea>
-            <input  type="submit" name="submit" value="Отправить">
+    <div>
+        <p>id: {{ post.id }}</p>
+        <h2>title: {{ post.title }}</h2>
+        <p>image: {{ post.image }}</p>
+        <h3>description: {{ post.description }}</h3>
+        <h3>like: {{ post.like }}</h3>
+
+
+        {% if post.comments.all %}
+        <h3>Comments:</h3>
+        <div class="Comments">
+            {% for comment in post.comments.all %}
+                <h4>
+                    {{ comment.text }}
+                </h4>
+                    ({{ comment.date }})
+            {% endfor %}
         </div>
-</form>
+        {% endif %}
+        <form action="/post-detail/{{post.id}}" method="POST">
+            {% csrf_token %}
+            <label for="text"></label>
+            <input placeholder="Добавить комментарий" id="text" type="text" name="text">
+                <input type="submit" value="Отправить">
+
+
+        </form>
+    </div>
 </body>
 </html>

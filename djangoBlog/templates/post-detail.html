@@ -1,5 +1,9 @@
+
 <!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Detailed information about: {{ post.title }}</title>
@@ -8,27 +12,32 @@
     <div>
         <p>id: {{ post.id }}</p>
         <h2>title: {{ post.title }}</h2>
-        <p>image: {{ post.image }}</p>
+        <img class="show-image" src="{{ post.image }}" alt="img">
         <h3>description: {{ post.description }}</h3>
         <h3>like: {{ post.like }}</h3>
 
 
-        {% if post.comments.all %}
         <h3>Comments:</h3>
         <div class="Comments">
-            {% for comment in post.comments.all %}
+            {% for comment in object.post_comments.all %}
                 <h4>
                     {{ comment.text }}
                 </h4>
                     ({{ comment.date }})
+
             {% endfor %}
         </div>
-        {% endif %}
+        <br>
+
+        <div>
+            <form action="/posts/{{object.pk}}/" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Добавить комментарий">
 
 
-        <textarea placeholder="Добавить комментарий" cols="30" rows="3"></textarea>
-        <input type="submit" value="Отправить">
-
+            </form>
+        </div>
     </div>
 </body>
 </html>
