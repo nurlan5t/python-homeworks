@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Serials</title>
+    <h1 align="center">ADD NEW SERIAL</h1>
+    <body>
+    <h3 align="center">
+        <form action="/add-serial/" method="POST">
+            {% csrf_token %}
+                <input type="submit" value="ADD">
+        </form>
+    </h3>
+    </body>
+
+</head>
+<body>
+    <div>
+        <ul>
+        <h1>ALL SERIALS:</h1>
+            {% for serial in object_list %}
+                <h2>{{ serial.title }}</h2>
+                <h3>{{ serial.image }}</h3>
+                <h3>{{ serial.description }}</h3>
+                <h3>{{ serial.duration }} мин.</h3>
+                <h3>{{ serial.age_limit }} +</h3>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

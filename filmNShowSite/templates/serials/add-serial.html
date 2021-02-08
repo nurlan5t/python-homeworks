@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Serials</title>
+    <h1 align="center">ADD NEW SERIAL</h1>
+    <body>
+    <h3 align="center">
+        <form action="/add-serial/" method="POST">
+            {% csrf_token %}
+            <li>
+            <label for="image"> Изображение: </label>
+            <input id="image" type="file" name="image">
+            </li>
+            <br>
+
+            <li>
+            <label for="title"> Заголовок: </label>
+            <input id="title" type="text" name="title">
+            </li>
+            <br>
+
+            <li>
+            <label for="description"> Описание: </label>
+            <input id="description" type="text" name="description">
+            </li>
+            <br>
+
+            <li>
+            <label for="duration"> Продолжительность: </label>
+            <input id="duration" type="text" name="duration">
+            </li>
+            <br>
+
+            <li>
+            <label for="age_limit"> Возрастное ограничение: </label>
+            <input id="age_limit" type="text" name="age_limit">
+            </li>
+            <br>
+
+                <input type="submit" value="ADD">
+        </form>
+    </h3>
+    </body>
+
+</head>
+</html>
